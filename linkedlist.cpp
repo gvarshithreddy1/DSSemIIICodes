@@ -102,7 +102,7 @@ class LL
             else{
                 Node *current = head;
                 head = current->next;
-                current = nullptr;
+                delete current;
                 count--;
             }
 
@@ -123,6 +123,7 @@ class LL
                     current = current->next;
                 }
                 current1->next = nullptr;
+                delete current;
                 count--;
             }
             
@@ -148,6 +149,7 @@ class LL
                     }
                     Node *delNode = current->next;
                     current->next = delNode->next;
+                    delete delNode;
                     count--;
                 }
                 
