@@ -1,282 +1,253 @@
-#include<iostream>
-#include<bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
-struct Node
-{
+struct Node {
     int data;
     Node* next;
 };
 
-class LL
-{
-    public:
+class LL {
+public:
+    int count = 0;
+    Node* head;
+
+    LL() {
+        head = nullptr;
         int count = 0;
-        LL()
-        {
-            head = nullptr;
-            int count = 0;
-        }
+    }
 
-        //methods for inserting data
-        void insertEnd(int data)
-        {
-            Node *newNode = new Node();
+    // Methods for inserting data
+    void insertEnd(int data) {
+        Node* newNode = new Node();
+        newNode->data = data;
+        newNode->next = nullptr;
+
+        if (head == nullptr) {
+            head = newNode;
+        } else {
+            Node* current = head;
+            while (current->next != nullptr) {
+                current = current->next;
+            }
+            current->next = newNode;
+        }
+        count++;
+    }
+
+    void insertFront(int data) {
+        Node* newNode = new Node();
+        newNode->data = data;
+        newNode->next = nullptr;
+
+        if (head != nullptr) {
+            Node* current = head;
+            newNode->next = current;
+            head = newNode;
+        } else {
+            head = newNode;
+        }
+        count++;
+    }
+
+    void insert(int data, int position) {
+        if (position == 1)
+            insertFront(data);
+        else if (position > count) {
+            cout << "Linked list has only " << count << " nodes. But your position exceeded the size. (max = " << count + 1 << " )" << endl;
+            count--;
+        } else {
+            Node* newNode = new Node();
             newNode->data = data;
             newNode->next = nullptr;
 
-            if(head == nullptr)
-            {
-                head = newNode; 
+            Node* current = head;
+            for (int i = 1; i < position - 1; i++) {
+                current = current->next;
             }
-            else
-            {
-                Node *current = head;
-                while(current->next != nullptr)
-                {
+            Node* temp = current->next;
+            current->next = newNode;
+            newNode->next = temp;
+        }
+        count++;
+    }
+
+    // Methods for deletion
+    void deleteFront() {
+        if (head == nullptr) {
+            cout << "Cannot delete elements from an empty list. " << endl;
+        } else {
+            Node* current = head;
+            head = current->next;
+            delete current;
+            count--;
+        }
+    }
+
+    void deleteEnd() {
+        if (head == nullptr) {
+            cout << "Cannot delete elements from an empty list. " << endl;
+        } else {
+            Node* current = head;
+            Node* current1 = nullptr;
+            while (current->next != nullptr) {
+                current1 = current;
+                current = current->next;
+            }
+            current1->next = nullptr;
+            delete current;
+            count--;
+        }
+    }
+
+    void deletePos(int position) {
+        if (head == nullptr) {
+            cout << "Cannot delete elements from an empty list. " << endl;
+        } else {
+            if (position == 1) {
+                deleteFront();
+            } else {
+                Node* current = head;
+                for (int i = 1; i < position - 1; i++) {
                     current = current->next;
                 }
-                current->next = newNode;
-            }
-            count++;
-            
-        }
-
-        void insertFront(int data)
-        {
-            Node *newNode = new Node();
-            newNode->data = data;
-            newNode->next = nullptr;
-
-            if(head != nullptr)
-            {
-                Node *current = head;
-                newNode->next = current;
-                head = newNode;
-            }
-            else{
-                head = newNode;
-            }
-            count++;
-
-
-        }
-
-        void insert(int data, int position)
-        {
-            if(position==1)
-                insertFront(data);
-
-            else if(position > count)
-            {
-                
-                cout<< "Linked list has only "<< count << " nodes. But your position exceeded the size.(max = " << count+1 << " )"<< endl;
+                Node* delNode = current->next;
+                current->next = delNode->next;
+                delete delNode;
                 count--;
             }
-            else{
-                Node *newNode = new Node();
-                newNode->data = data;
-                newNode->next = nullptr;
-
-                Node *current = head;
-                for(int i =1; i < position -1; i++)
-                {
-                    current = current->next;
-                }
-                Node *temp = current->next;
-                current->next = newNode;
-                newNode->next = temp;
-
-            }
-            count++;           
         }
+    }
 
+    int size() {
+        return count;
+    }
 
-        //methods for DELETION
-        void deleteFront()
-        {
-            if(head == nullptr)
-            {
-                cout << "Cannot delete elements from empty list. " << endl;
+    void reverse() {
+        if (head == nullptr) {
+            cout << "Can't reverse an empty linked list." << endl;
+        } else {
+            Node* current = head;
+            Node* prev = nullptr;
+            Node* next = nullptr;
+            while (current != nullptr) {
+                next = current->next;
+                current->next = prev;
+                prev = current;
+                current = next;
             }
-            else{
-                Node *current = head;
-                head = current->next;
-                delete current;
-                count--;
-            }
-
+            head = prev;
         }
+    }
 
-        void deleteEnd()
-        {
-            if(head == nullptr)
-            {
-                cout << "Cannot delete elements from empty list. " << endl;
+    void print() {
+        if (head == nullptr) {
+            cout << "The linked list is empty" << endl;
+        } else {
+            Node* current = head;
+            while (current->next != nullptr) {
+                cout << current->data << " --> ";
+                current = current->next;
             }
-            else{
-                Node *current = head;
-                Node *current1 =nullptr;
-                while(current->next != nullptr)
-                {
-                    current1 = current;
-                    current = current->next;
-                }
-                current1->next = nullptr;
-                delete current;
-                count--;
-            }
-            
+            cout << current->data << " --> null" << endl;
         }
-
-        void deletePos(int position)
-        {
-            if(head == nullptr)
-            {
-                cout << "Cannot delete elements from empty list. " << endl;
-            }
-            else{
-                if(position == 1)
-                {
-                    deleteFront();
-                }
-        
-                else{
-                    Node *current = head;
-                    for(int i = 1; i < position-1; i++)
-                    {
-                        current = current->next;
-                    }
-                    Node *delNode = current->next;
-                    current->next = delNode->next;
-                    delete delNode;
-                    count--;
-                }
-                
-
-            }
-        }
-
-
-        int size()
-        {
-            return count;
-        }
-
-        void reverse()
-        {
-            if(head == nullptr)
-            {
-                cout << "Can't reverse an empty linked list." << endl;
-            }
-            else
-            {
-                Node *current = head;
-                Node *prev = nullptr;
-                Node *next = nullptr;
-                while(current != nullptr)
-                {
-                    
-                    next = current->next;
-                    current->next = prev;
-                    prev = current;
-                    current = next;
-                }
-                head = prev;
-            }
-        }
-
-
-        void print()
-        {
-            if(head == nullptr)
-            {
-                cout << "The linked list is empty" << endl;
-            }
-            else{
-                Node *current = head;
-                while(current->next != nullptr)
-                {
-
-                    cout << current->data << " --> ";
-                    current = current->next;
-                }
-                cout << current->data << " --> null" << endl;
-            }
-        }
-
-
-    private:
-        Node *head;
+    }
 };
 
-
-class stack{
-    int top =-1;
+class Stack {
+    int top = -1;
     LL ll;
     int size;
-    public:
-    stack(int size)
-    {
-        this->size =size;
+
+public:
+    Stack(int size) {
+        this->size = size;
     }
-       void push(int a){
-        if(top ==size-1)
-        {
+
+    void push(int a) {
+        if (top == size - 1) {
             cout << "Stack Overflow" << endl;
-        }
-        else
-        {
+        } else {
             top++;
             ll.insertEnd(a);
-            
         }
+    }
 
-        void pop()
-        {
-            if(top ==-1)
+    void pop() {
+        if (top == -1)
             cout << "Stack Underflow" << endl;
-
-            else
-            {
-                ll.deleteEnd();
-                top--;
-
-            }
-        
+        else {
+            ll.deleteEnd();
+            top--;
         }
+    }
 
-        void display()
-        {
-            ll.display();
-        }
-       }
-
+    void display() {
+        cout << "Stack Elements:" << endl;
+        ll.print();
+    }
 };
 
-
-
-int main()
-{
+int main() {
+    // Create a new linked list
     LL newll;
 
+    // Insert elements into the linked list
     newll.insertEnd(1);
     newll.insertEnd(2);
     newll.insertEnd(3);
     newll.insertFront(5);
-    newll.insert(6,4);
+    newll.insert(6, 4);
+
+    // Print the linked list
+    cout << "Linked List:" << endl;
     newll.print();
+
+    // Reverse the linked list
     newll.reverse();
+    cout << "\nLinked List after reversal:" << endl;
     newll.print();
+
+    // Create a stack using the linked list
+    Stack newStack(5);
+
+    // Push elements onto the stack
+    newStack.push(10);
+    newStack.push(20);
+    newStack.push(30);
+
+    // Display the stack
+    cout << "\nStack elements:" << endl;
+    newStack.display();
+
+    // Pop elements from the stack
+    newStack.pop();
+    newStack.pop();
+
+    cout << "\nStack elements after popping twice:" << endl;
+    newStack.display();
+
+    // Deleting elements from the linked list
     newll.deleteFront();
+    cout << "\nLinked List after deleting front element:" << endl;
     newll.print();
-    newll.deletePos(1);
+
+    newll.deletePos(2);
+    cout << "\nLinked List after deleting element at position 2:" << endl;
     newll.print();
+
     newll.deleteEnd();
+    cout << "\nLinked List after deleting the last element:" << endl;
     newll.print();
-    cout << newll.size() << endl;
+
+    cout << "\nLinked List size: " << newll.size() << endl;
+
+    // Create another linked list (ll2)
     LL ll2;
+    cout << "\nLinked List ll2:" << endl;
     ll2.print();
+
+    // Try deleting from an empty linked list
     ll2.deleteFront();
+
     return 0;
 }
