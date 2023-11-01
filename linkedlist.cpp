@@ -211,6 +211,50 @@ class LL
 };
 
 
+class stack{
+    int top =-1;
+    LL ll;
+    int size;
+    public:
+    stack(int size)
+    {
+        this->size =size;
+    }
+       void push(int a){
+        if(top ==size-1)
+        {
+            cout << "Stack Overflow" << endl;
+        }
+        else
+        {
+            top++;
+            ll.insertEnd(a);
+            
+        }
+
+        void pop()
+        {
+            if(top ==-1)
+            cout << "Stack Underflow" << endl;
+
+            else
+            {
+                ll.deleteEnd();
+                top--;
+
+            }
+        
+        }
+
+        void display()
+        {
+            ll.display();
+        }
+       }
+
+};
+
+
 
 int main()
 {
