@@ -188,45 +188,45 @@ public:
 };
 
 int main() {
-    // Create a new linked list
+    
     LL newll;
 
-    // Insert elements into the linked list
+    
     newll.insertEnd(1);
     newll.insertEnd(2);
     newll.insertEnd(3);
     newll.insertFront(5);
     newll.insert(6, 4);
 
-    // Print the linked list
+    
     cout << "Linked List:" << endl;
     newll.print();
 
-    // Reverse the linked list
+    
     newll.reverse();
     cout << "\nLinked List after reversal:" << endl;
     newll.print();
 
-    // Create a stack using the linked list
+    
     Stack newStack(5);
 
-    // Push elements onto the stack
+    
     newStack.push(10);
     newStack.push(20);
     newStack.push(30);
 
-    // Display the stack
+    
     cout << "\nStack elements:" << endl;
     newStack.display();
 
-    // Pop elements from the stack
+    
     newStack.pop();
     newStack.pop();
 
     cout << "\nStack elements after popping twice:" << endl;
     newStack.display();
 
-    // Deleting elements from the linked list
+    
     newll.deleteFront();
     cout << "\nLinked List after deleting front element:" << endl;
     newll.print();
@@ -241,12 +241,12 @@ int main() {
 
     cout << "\nLinked List size: " << newll.size() << endl;
 
-    // Create another linked list (ll2)
+    
     LL ll2;
     cout << "\nLinked List ll2:" << endl;
     ll2.print();
 
-    // Try deleting from an empty linked list
+    
     ll2.deleteFront();
 
     return 0;
